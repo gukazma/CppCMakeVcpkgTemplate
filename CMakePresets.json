@@ -28,6 +28,20 @@
                 "CMAKE_INSTALL_PREFIX": "${sourceDir}/build/install/${presetName}",
                 "CMAKE_TOOLCHAIN_FILE": "${sourceDir}/vcpkg/scripts/buildsystems/vcpkg.cmake"
             }
+        },
+        {
+            "name": "aarch64-linux",
+            "displayName": "GCC 13.2.0 aarch64-linux-gnu",
+            "description": "Using compilers: C = /usr/bin/aarch64-linux-gnu-gcc, CXX = /usr/bin/aarch64-linux-gnu-g++",
+            "binaryDir": "${sourceDir}/build/${presetName}",
+            "cacheVariables": {
+                "CMAKE_INSTALL_PREFIX": "${sourceDir}/build/install/${presetName}",
+                "CMAKE_C_COMPILER:STRING": "/usr/bin/aarch64-linux-gnu-gcc",
+                "CMAKE_CXX_COMPILER": "/usr/bin/aarch64-linux-gnu-g++",
+                "VCPKG_TARGET_TRIPLET": "arm64-linux",
+                "CMAKE_EXE_LINKER_FLAGS": "-static",
+                "CMAKE_TOOLCHAIN_FILE": "${sourceDir}/vcpkg/scripts/buildsystems/vcpkg.cmake"
+            }
         }
     ],
     "buildPresets": [
@@ -62,6 +76,18 @@
             "displayName": "Visual Studio Community 2022 Release - amd64 - Release",
             "configurePreset": "vs2022-x64",
             "configuration": "Release"
+        },
+        {
+            "name": "aarch64-linux-release",
+            "displayName": "GCC 13.2.0 aarch64-linux-gnu - Release",
+            "configurePreset": "aarch64-linux",
+            "configuration": "Release"
+        },
+        {
+            "name": "aarch64-linux-debug",
+            "displayName": "GCC 13.2.0 aarch64-linux-gnu - Debug",
+            "configurePreset": "aarch64-linux",
+            "configuration": "Debug"
         }
     ],
     "testPresets": [
