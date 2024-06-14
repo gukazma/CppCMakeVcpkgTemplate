@@ -4,18 +4,12 @@ enable_testing()
 
 find_package(GTest CONFIG REQUIRED)
 
-file(GLOB_RECURSE HEADER_FILES "*.h")
-file(GLOB_RECURSE SOURCE_FILES "*.cpp")
+file(GLOB_RECURSE H_FILES "*.h")
+file(GLOB_RECURSE CPP_FILES "*.cpp")
 
-set(CMAKE_AUTOUIC_SEARCH_PATHS ${CMAKE_CURRENT_SOURCE_DIR}/source)
+source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" FILES ${H_FILES} ${CPP_FILES})
 
-# file(GLOB EDITOR_RESOURCE CONFIGURE_DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/resource/PilotEditor.rc)
-
-source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" FILES ${HEADER_FILES} ${SOURCE_FILES})
-
-add_executable(${TARGET_NAME} ${HEADER_FILES} ${SOURCE_FILES})
-
-# add_compile_definitions("PILOT_ROOT_DIR=${BINARY_ROOT_DIR}")
+add_executable(${TARGET_NAME} ${H_FILES} ${CPP_FILES})
 
 set_target_properties(${TARGET_NAME} PROPERTIES CXX_STANDARD 17 OUTPUT_NAME ${TARGET_NAME})
 set_target_properties(${TARGET_NAME} PROPERTIES FOLDER Test)
@@ -30,7 +24,6 @@ target_link_libraries(${TARGET_NAME}
 target_include_directories(
   ${TARGET_NAME} 
   PUBLIC 
-#   <BUILDINTERFACE:{CMAKE_CURRENT_SOURCE_DIR}/include/>
 )
 
 add_test(

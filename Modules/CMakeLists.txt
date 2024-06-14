@@ -1,1 +1,2 @@
-add_subdirectory(Common)
+add_subdirectory(Libs)
+add_subdirectory(LibsConfig)
