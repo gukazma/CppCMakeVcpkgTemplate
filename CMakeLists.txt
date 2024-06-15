@@ -12,7 +12,7 @@ endif ()
 project(CppTemplateProject VERSION 0.1 LANGUAGES CXX)
 
 option(ENABLE_DOCS "Enable doxygen docs" ON)
-option(ENABLE_QTAPP "Enable config Qt app" OFF)
+option(ENABLE_QTAPP "Enable config Qt app" ON)
 
 # just for qt
 # set(CMAKE_AUTOUIC ON)
