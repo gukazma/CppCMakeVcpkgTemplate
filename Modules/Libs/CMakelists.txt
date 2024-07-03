@@ -1,3 +1,33 @@
+# interface libs
+file(GLOB INTERFACE_LIB_DIRS ${CMAKE_CURRENT_LIST_DIR}/Interface/*)
+foreach(INTERFACE_LIB_DIR ${INTERFACE_LIB_DIRS})
+    get_filename_component(TARGET_NAME ${INTERFACE_LIB_DIR} NAME)
+    message("Configuring interface ${INTERFACE_LIB_DIR}")
+    file(GLOB_RECURSE H_FILES "${INTERFACE_LIB_DIR}/*.h")
+    file(GLOB_RECURSE HPP_FILES "${INTERFACE_LIB_DIR}/*.hpp")
+    file(GLOB_RECURSE CPP_FILES "${INTERFACE_LIB_DIR}/*.cpp")
+    file(GLOB_RECURSE CC_FILES "${INTERFACE_LIB_DIR}/*.cc")
+    file(GLOB_RECURSE CU_FILES "${INTERFACE_LIB_DIR}/*.cu")
+
+    source_group(TREE "${INTERFACE_LIB_DIR}" FILES ${H_FILES} ${HPP_FILES} ${CPP_FILES} ${CC_FILES} ${CU_FILES})
+
+    add_library(${TARGET_NAME} INTERFACE ${HEADER_FILES} ${H_FILES} ${HPP_FILES} ${CPP_FILES} ${CC_FILES} ${CU_FILES})
+    add_library(${PROJECT_NAME}::${TARGET_NAME} ALIAS ${TARGET_NAME})
+
+    set_target_properties(${TARGET_NAME} PROPERTIES CXX_STANDARD 17)
+    set_target_properties(${TARGET_NAME} PROPERTIES FOLDER Modules/Interface)
+    # Link dependencies    
+    target_link_libraries(${TARGET_NAME} 
+        PUBLIC
+              )
+
+    target_include_directories(
+      ${TARGET_NAME} 
+      INTERFACE
+      ${CMAKE_CURRENT_LIST_DIR}/Interface
+    )
+endforeach()
+
 # static libs
 file(GLOB STATIC_LIB_DIRS ${CMAKE_CURRENT_LIST_DIR}/Static/*)
 
@@ -12,7 +42,7 @@ foreach(STATIC_LIB_DIR ${STATIC_LIB_DIRS})
 
     source_group(TREE "${STATIC_LIB_DIR}" FILES ${H_FILES} ${HPP_FILES} ${CPP_FILES} ${CC_FILES} ${CU_FILES})
 
-    add_library(${TARGET_NAME} STATIC ${HEADER_FILES} ${CPP_FILES} ${HEADER_FILES} ${HPP_FILES})
+    add_library(${TARGET_NAME} STATIC ${HEADER_FILES} ${H_FILES} ${HPP_FILES} ${CPP_FILES} ${CC_FILES} ${CU_FILES})
     add_library(${PROJECT_NAME}::${TARGET_NAME} ALIAS ${TARGET_NAME})
 
     set_target_properties(${TARGET_NAME} PROPERTIES CXX_STANDARD 17)
@@ -30,7 +60,7 @@ foreach(STATIC_LIB_DIR ${STATIC_LIB_DIRS})
     target_include_directories(
       ${TARGET_NAME} 
       PUBLIC 
-        $<BUILD_INTERFACE:${STATIC_LIB_DIR}>
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/Static>
     )
 endforeach()
 
@@ -39,7 +69,7 @@ file(GLOB SHARED_LIB_DIRS ${CMAKE_CURRENT_LIST_DIR}/Shared/*)
 
 foreach(SHARED_LIB_DIR ${SHARED_LIB_DIRS})
     get_filename_component(TARGET_NAME ${SHARED_LIB_DIR} NAME)
-    message("Configuring static ${SHARED_LIB_DIR}")
+    message("Configuring shared ${SHARED_LIB_DIR}")
     file(GLOB_RECURSE H_FILES "${SHARED_LIB_DIR}/*.h")
     file(GLOB_RECURSE HPP_FILES "${SHARED_LIB_DIR}/*.hpp")
     file(GLOB_RECURSE CPP_FILES "${SHARED_LIB_DIR}/*.cpp")
@@ -48,7 +78,7 @@ foreach(SHARED_LIB_DIR ${SHARED_LIB_DIRS})
 
     source_group(TREE "${SHARED_LIB_DIR}" FILES ${H_FILES} ${HPP_FILES} ${CPP_FILES} ${CC_FILES} ${CU_FILES})
 
-    add_library(${TARGET_NAME} SHARED ${HEADER_FILES} ${CPP_FILES} ${HEADER_FILES} ${HPP_FILES})
+    add_library(${TARGET_NAME} SHARED ${HEADER_FILES}  ${H_FILES} ${HPP_FILES} ${CPP_FILES} ${CC_FILES} ${CU_FILES})
     add_library(${PROJECT_NAME}::${TARGET_NAME} ALIAS ${TARGET_NAME})
 
     set_target_properties(${TARGET_NAME} PROPERTIES CXX_STANDARD 17)
@@ -61,11 +91,15 @@ foreach(SHARED_LIB_DIR ${SHARED_LIB_DIRS})
     # Link dependencies    
     target_link_libraries(${TARGET_NAME} 
         PUBLIC
+        ${PROJECT_NAME}::Common
               )
 
     target_include_directories(
       ${TARGET_NAME} 
       PUBLIC 
-        $<BUILD_INTERFACE:${SHARED_LIB_DIR}>
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/Shared>
     )
+
+    target_compile_definitions(${TARGET_NAME} PRIVATE DLL_EXPORT)
+
 endforeach()

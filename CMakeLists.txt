@@ -9,10 +9,12 @@ if (NOT CMAKE_BUILD_TYPE)
     message(STATUS "No CMAKE_BUILD_TYPE selected, defaulting to ${CMAKE_BUILD_TYPE}")
 endif ()
 
-project(CppTemplateProject VERSION 0.1 LANGUAGES CXX)
+get_filename_component(ROOT_NAME ${CMAKE_SOURCE_DIR} NAME)
+message("Configure project: ${ROOT_NAME}")
+project(${ROOT_NAME} VERSION 0.1 LANGUAGES CXX)
 
 option(ENABLE_DOCS "Enable doxygen docs" ON)
-option(ENABLE_QTAPP "Enable config Qt app" ON)
+option(ENABLE_QTAPP "Enable config Qt app" OFF)
 
 # just for qt
 # set(CMAKE_AUTOUIC ON)
