@@ -43,6 +43,7 @@ endif()
 
 add_subdirectory(Modules)
 add_subdirectory(Apps)
+enable_testing()
 add_subdirectory(Tests)
 
 if(ENABLE_DOCS)

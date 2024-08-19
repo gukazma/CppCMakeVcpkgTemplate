@@ -1,6 +1,6 @@
 set(TARGET_NAME "TEST")
 
-enable_testing()
+
 
 find_package(GTest CONFIG REQUIRED)
 
