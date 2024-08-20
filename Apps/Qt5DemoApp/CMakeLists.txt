@@ -26,14 +26,14 @@ Qt5::Widgets
 Qt5::OpenGL
 )
 
-if(MSVC)
-message("Finding windeployqt")
-find_program(DEPLOYQT_EXECUTABLE windeployqt)
-add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
-  COMMAND ${DEPLOYQT_EXECUTABLE} ${CMAKE_BINARY_DIR}/${TARGET_NAME}.exe
-  COMMENT "Deploying qt dependencies after build..."
-  WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
-)
+if(MSVC AND PUBLISH_APP)
+# message("Finding windeployqt")
+# find_program(DEPLOYQT_EXECUTABLE windeployqt)
+# add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
+#   COMMAND ${DEPLOYQT_EXECUTABLE} ${CMAKE_BINARY_DIR}/bin/${TARGET_NAME}.exe
+#   COMMENT "Deploying qt dependencies after build..."
+#   WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+# )
 
 set_target_properties(${TARGET_NAME} PROPERTIES
 LINK_FLAGS_RELEASE "/SUBSYSTEM:WINDOWS /ENTRY:mainCRTStartup"
