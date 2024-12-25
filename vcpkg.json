@@ -4,5 +4,5 @@
   "dependencies": [
     "gtest"
   ],
-  "builtin-baseline":"2f210a9c13fcf2b0c36b1f2187366feec37e3390"
+  "builtin-baseline": "80d54ff62d528339c626a6fbc3489a7f25956ade"
 }
