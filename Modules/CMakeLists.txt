@@ -1,2 +1,1 @@
-add_subdirectory(Libs)
-add_subdirectory(LibsConfig)
+add_subdirectory(MyLibs)

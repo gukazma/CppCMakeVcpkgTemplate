@@ -1,6 +1,6 @@
 #include "API.h"
 
-void DLL_API API()
+void API()
 {
     return;
 }
