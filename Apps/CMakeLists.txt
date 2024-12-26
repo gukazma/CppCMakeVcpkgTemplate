@@ -1,4 +1,4 @@
 if(ENABLE_QTAPP)
-add_subdirectory(Qt5DemoApp)
+add_subdirectory(QtDemoApp)
 endif()
 add_subdirectory(DemoApp)
