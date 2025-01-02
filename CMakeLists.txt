@@ -1,5 +1,13 @@
 cmake_minimum_required(VERSION 3.16)
-
+if(CMAKE_HOST_SYSTEM_NAME MATCHES "Linux")
+	message("Current platform: Linux ")
+  set(VCPKG_TARGET_TRIPLET x64-linux-dynamic CACHE STRING "")
+elseif(CMAKE_HOST_SYSTEM_NAME MATCHES "Windows")
+	message("Current platform: Windows ")
+  set(VCPKG_TARGET_TRIPLET x64-windows CACHE STRING "")
+else()
+	message("Current platform: unkonw ")
+endif()
 # 设置基础环境
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
@@ -31,6 +39,8 @@ set(CMAKE_RELEASE_POSTFIX "")
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_INSTALL_PREFIX}/bin)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_INSTALL_PREFIX}/bin)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELWITHDEBINFO ${CMAKE_INSTALL_PREFIX}/bin)  
+
+
 
 include(CMakeModules/doxygen.cmake)
 include(CMakeModules/dependency-graph.cmake)
